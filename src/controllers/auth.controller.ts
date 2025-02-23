@@ -20,7 +20,15 @@ export class AuthController {
       const user = new User({ email, password, role });
       await user.save();
 
-      const token = jwt.sign({ id: user._id }, JWT_SECRET, { expiresIn: '24h' });
+      const token = jwt.sign(
+        { 
+          userId: user._id, 
+          email: user.email, 
+          role: user.role 
+        }, 
+        JWT_SECRET, 
+        { expiresIn: '24h' }
+      );
 
       res.status(201).json({ token, user: { id: user._id, email: user.email, role: user.role } });
     } catch (error) {
@@ -45,7 +53,15 @@ export class AuthController {
         return;
       }
 
-      const token = jwt.sign({ id: user._id }, JWT_SECRET, { expiresIn: '24h' });
+      const token = jwt.sign(
+        { 
+          userId: user._id, 
+          email: user.email, 
+          role: user.role 
+        }, 
+        JWT_SECRET, 
+        { expiresIn: '24h' }
+      );
 
       res.status(200).json({ token, user: { id: user._id, email: user.email, role: user.role } });
     } catch (error) {

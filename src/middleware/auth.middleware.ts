@@ -4,7 +4,7 @@ import dotenv from 'dotenv';
 
 dotenv.config();
 
-const JWT_SECRET = process.env.JWT_SECRET || 'your-default-secret-key';
+const JWT_SECRET = process.env.JWT_SECRET || '1234678';
 
 interface JwtPayload {
   userId: string;
@@ -48,6 +48,7 @@ export const authMiddleware = async (
     const token = parts[1];
 
     try {
+      console.log("JWT_SECRET: ", JWT_SECRET);
       const decoded = jwt.verify(token, JWT_SECRET) as JwtPayload;
       req.user = decoded;
       next();

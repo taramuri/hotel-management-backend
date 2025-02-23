@@ -1,6 +1,6 @@
 import { Router } from 'express';
 import { ClientController } from '../controllers/client.controller';
-import { authMiddleware } from '../middleware/auth.middleware';
+import { authMiddleware, roleMiddleware } from '../middleware/auth.middleware';
 
 const router = Router();
 const clientController = new ClientController();
@@ -9,9 +9,9 @@ const clientController = new ClientController();
 router.get('/clients', clientController.getAllClients);
 router.get('/clients/:id', clientController.getClientById);
 
-// protected routes
-router.post('/clients', authMiddleware, clientController.createClient);
-router.put('/clients/:id', authMiddleware, clientController.updateClient);
-router.delete('/clients/:id', authMiddleware, clientController.deleteClient);
+// protected routes with role check
+router.post('/clients', authMiddleware, roleMiddleware(['admin']), clientController.createClient);
+router.put('/clients/:id', authMiddleware, roleMiddleware(['admin']), clientController.updateClient);
+router.delete('/clients/:id', authMiddleware, roleMiddleware(['admin']), clientController.deleteClient);
 
 export default router;

@@ -1,4 +1,3 @@
-// src/controllers/client.controller.ts
 import { Request, Response } from 'express';
 import Client, { IClient } from '../models/client.model';
 
